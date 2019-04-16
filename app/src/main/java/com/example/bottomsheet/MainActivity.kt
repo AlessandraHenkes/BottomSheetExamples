@@ -1,12 +1,9 @@
 package com.example.bottomsheet
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,15 +12,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-    }
-
-    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
-        val view = super.onCreateView(name, context, attrs)
-
         btnBottomSheetBehavior.setOnClickListener {
-            startActivity(Intent(this@MainActivity, PersistenceBottomSheet::class.java))
+            startActivity(Intent(this, PersistentBottomSheetActivity::class.java))
         }
 
-        return view
+        btnBottomSheetDialogFragment.setOnClickListener {
+            ModalBottomSheetFragment().show(supportFragmentManager, "BottomSheetDialogFragment")
+        }
+
+        btnBottomSheetDialog.setOnClickListener {
+            val view = layoutInflater.inflate(R.layout.fragment_modal_bottom_sheet, null)
+            val bottomSheet = BottomSheetDialog(this)
+            bottomSheet.setContentView(view)
+            bottomSheet.show()
+        }
+
+        btnBottomSheetFullScreen.setOnClickListener {
+            ModalFullScreenBottomSheetFragment().show(supportFragmentManager, "BottomSheetFullScreenDialogFragment")
+        }
     }
 }
